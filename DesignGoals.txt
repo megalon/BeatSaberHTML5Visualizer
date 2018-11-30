@@ -1,0 +1,11 @@
+Design goals:
+
+Show difficult parts of beatmaps.
+Compare multiple runs of the same song next to eachother.
+Show maximum possible score at current position.
+Make it as portable as possible, so it can be on ScoreSaber and used for caster analysis 
+
+
+TODO:
+DONE Dot notes
+Obstacles
