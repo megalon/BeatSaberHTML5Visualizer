@@ -1,8 +1,9 @@
 // Store and display all of the bloqs, bombs, and obstacles in the beatmap. 
+import { PIDIVISIONS } from './utils/constants.js'
 import { makeBloq, makeWall } from './bloqbuilder.js'
 
 // Draw the support lines below the bloqs
-let drawSupports = true;
+let drawSupports = false;
 let minX = 0
 let maxX = 10
 
@@ -51,8 +52,31 @@ export default class BeatMapBuilder {
     // Loop through all of the lineLayers
     for (let lineLayer = 0; lineLayer < bloqs.length; ++lineLayer){
       // Loop through all of the lineIndexes in this lineLayer
-      // This time in reverse order
-      for (let lineIndex = 0; lineIndex < bloqs[lineLayer].length; ++lineIndex){
+
+      let lineIndexLoop = true
+      let lineIndex = -1
+      if (rotations.z > PIDIVISIONS.piover4) {
+        lineIndex = bloqs[lineLayer].length
+      }
+      
+      while (lineIndexLoop) {
+        if (rotations.z < PIDIVISIONS.piover4){
+          if (lineIndex >= bloqs[lineLayer].length - 1) { 
+            lineIndexLoop = false
+            continue
+          }
+          ++lineIndex
+        } else {
+          if (lineIndex <= 0) { 
+            lineIndexLoop = false
+            continue
+          }
+          --lineIndex
+        }
+
+        //console.log(lineIndex)
+      // console.log(rotations.z)
+      //for (lineIndex = 0; lineIndex < bloqs[lineLayer].length; ++lineIndex){
         // Store lineIndex length so we don't have to get it for each item in the array
         let lineIndexLength = bloqs[lineLayer][lineIndex].length
         // Loop through all of the bloqs in this lineIndex

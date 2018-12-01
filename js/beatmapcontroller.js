@@ -4,9 +4,9 @@ const { Point, Shape, Color } = Isomer
 
 const builder = new BeatmapBuilder()
 
-const xRotationPointMaster = new Point(2, 5, 0)
-const yRotationPointMaster = new Point(2, 5, 0)
-const zRotationPointMaster = new Point(2, 5, 0)
+const xRotationPointMaster = new Point(1.5, 5, 0)
+const yRotationPointMaster = xRotationPointMaster
+const zRotationPointMaster = xRotationPointMaster
 
 const rotationPoints = {'x': xRotationPointMaster, 'y': yRotationPointMaster, 'z': zRotationPointMaster}
 

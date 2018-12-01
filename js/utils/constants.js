@@ -1,6 +1,11 @@
 /*
-  Constants used for manual testing 
+  Constants
 */
+
+export const PIDIVISIONS  = {
+  'piover2': Math.PI / 2,
+  'piover4': Math.PI / 4,
+}
 
 /*
 lineIndex : Note horizontal position (0 to 3, start from left)
