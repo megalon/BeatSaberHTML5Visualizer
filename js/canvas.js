@@ -13,8 +13,6 @@ const iso = new Isomer(document.getElementById("art"));
 // Rendering and movement of the beatmap
 const beatmapController = new BeatmapController()
 
-beatmapController.drawGrid(iso)
-
 const testSongPath = '../testdata/Your voice so - PSYQUI/ExpertPlus.json'
 //const testSongPath = '../testdata/ExpertPlus.json'
 //const testSongPath = '../testdata/Tank! (Ben Briggs Remix)/Expert.json'
@@ -27,21 +25,37 @@ var cvHeight = canvas.height;
 
 
 let x = 0
+let xRotation = 0
+let yRotation = 0
+let zRotation = 0
+let rotationSpeed = 0.01
+let rotationMax = Math.PI / 2
+let rotationMin = 0
 let speed = 0.05
 let paused = true
 
 function animate() {
   // call again next time we can draw
-  requestAnimationFrame(animate);
+  requestAnimationFrame(animate)
   // clear canvas
-  ctx.clearRect(0, 0, cvWidth, cvHeight);
+  ctx.clearRect(0, 0, cvWidth, cvHeight)
 
-  beatmapController.draw(iso, -x, -2, 1.5, -0.5)
+  beatmapController.draw(iso, -x, -2, 1.5, -0.5, {'x':xRotation, 'y':yRotation, 'z':zRotation})
 
   //iso.add(test2.test.translate(x, 0, 0), new Color(0, 0, 0))
 
-  if(!paused)
+  if(!paused) {
     x += speed     
+
+    if (zRotation >= rotationMax) {
+      zRotation = rotationMax
+      rotationSpeed = -rotationSpeed
+    }else if (zRotation <= rotationMin) {
+      zRotation = rotationMin
+      rotationSpeed = -rotationSpeed
+    }
+    zRotation += rotationSpeed
+  }
 }
 
 animate()
@@ -49,4 +63,4 @@ animate()
 // click handler to add random rects
 window.addEventListener('click', function() {
   paused = !paused
-});
+})

@@ -47,7 +47,7 @@ export default class BeatMapBuilder {
     }
   }
   
-  drawBeatmap(iso, timeOffset, xoffset, yoffset, zoffset) {
+  drawBeatmap(iso, timeOffset, xoffset, yoffset, zoffset, rotationPoints, rotations) {
     // Loop through all of the lineLayers
     for (let lineLayer = 0; lineLayer < bloqs.length; ++lineLayer){
       // Loop through all of the lineIndexes in this lineLayer
@@ -61,30 +61,46 @@ export default class BeatMapBuilder {
         for (let bloqIndex = lineIndexLength - 1; bloqIndex >= 0; --bloqIndex) {
           let bloq = bloqs[lineLayer][lineIndex][bloqIndex]
 
-          //console.log(bloq.cube.shape.translate(10, 0, 0))
-
-          //console.log(`Adding bloqs[${lineLayer}][${lineIndex}][${bloqIndex}] to the iso.`)
-          //console.log(bloq)
+          // -----------------
+          // Add the bloqs to the iso so they can be drawn onto the canvas
+          // -----------------
 
           tempX = bloq.cube.shape.paths[0].points[0].x + timeOffset + xoffset
           
           // Skip drawing the bloqs if they aren't visible
           if (tempX < minX + xoffset || tempX - xoffset > maxX) continue
 
-          // -----------------
-          // Add the bloqs to the iso so they can be drawn onto the canvas
-          // -----------------
-
           // Draw the support stick
           if (bloq.supportStick !== undefined && drawSupports)
-            iso.add(bloq.supportStick.shape.translate(timeOffset + xoffset, yoffset, zoffset), bloq.supportStick.color)
+            iso.add(
+              bloq.supportStick.shape
+              .translate(timeOffset + xoffset, yoffset, zoffset)
+              .rotateX(rotationPoints.x, rotations.x)
+              .rotateY(rotationPoints.y, rotations.y)
+              .rotateZ(rotationPoints.z, rotations.z)
+              , bloq.supportStick.color
+              )
 
           // Draw the cube
-          iso.add(bloq.cube.shape.translate(timeOffset + xoffset, yoffset, zoffset), bloq.cube.color)
+          iso.add(
+            bloq.cube.shape
+            .translate(timeOffset + xoffset, yoffset, zoffset)
+            .rotateX(rotationPoints.x, rotations.x)
+            .rotateY(rotationPoints.y, rotations.y)
+            .rotateZ(rotationPoints.z, rotations.z)
+            , bloq.cube.color
+            )
 
           // Draw the arrow, it it exists. (Bombs have no arrow)
           if (bloq.arrow !== undefined)
-            iso.add(bloq.arrow.shape.translate(timeOffset + xoffset, yoffset, zoffset), bloq.arrow.color)
+            iso.add(
+              bloq.arrow.shape
+              .translate(timeOffset + xoffset, yoffset, zoffset)
+              .rotateX(rotationPoints.x, rotations.x)
+              .rotateY(rotationPoints.y, rotations.y)
+              .rotateZ(rotationPoints.z, rotations.z)
+              , bloq.arrow.color
+              )
         }
 
         // -----------------
@@ -96,13 +112,23 @@ export default class BeatMapBuilder {
         for (let obstacleIndex = lineIndexLength - 1; obstacleIndex >= 0; --obstacleIndex) {
           let obstacle = obstacles[lineLayer][lineIndex][obstacleIndex]
 
-          tempX = obstacle.shape.paths[0].points[0].x + timeOffset + xoffset
-          
-          // Skip drawing the obstacles if they aren't visible
           // The extra 1 is to make sure the walls appear / disappear at the right time
-          if (tempX < minX + xoffset + 1 || tempX - xoffset - 1 > maxX) continue
+          tempX = obstacle.wall.shape.paths[0].points[0].x + timeOffset + xoffset
+          
+          //console.log(obstacle.duration)
+          // Skip drawing the obstacles if they aren't visible
+          if (tempX < minX + xoffset + 1 || tempX - xoffset > maxX + obstacle.duration) continue
 
-          iso.add(obstacle.shape.translate(timeOffset + xoffset, yoffset, zoffset), obstacle.color)
+          //console.log(`zRotationPoint:${zRotationPoint} zrotation:${zrotation}`)
+
+          iso.add(
+            obstacle.wall.shape
+            .translate(timeOffset + xoffset, yoffset, zoffset)
+            .rotateX(rotationPoints.x, rotations.x)
+            .rotateY(rotationPoints.y, rotations.y)
+            .rotateZ(rotationPoints.z, rotations.z)
+            , obstacle.wall.color
+            )
         }
       }
     }

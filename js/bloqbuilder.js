@@ -87,7 +87,7 @@ export function makeWall(time, lineIndex, type, duration, width) {
       .translate(time + duration, 4 - lineIndex - width, 2)
       // ^ this translate is 3 - lineIndex - width + 1
   }
-  return getColoredShape(wall, redwall)
+  return { 'wall': getColoredShape(wall, redwall), 'duration': duration }
 }
 
 function makeBomb() {
