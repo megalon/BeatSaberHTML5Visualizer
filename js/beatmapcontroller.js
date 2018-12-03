@@ -1,4 +1,4 @@
-import BeatmapBuilder from './bloqObjects/beatmapbuilder.js'
+import BeatmapBuilder from './beatmap/beatmapbuilder.js'
 
 const { Point, Shape, Color } = Isomer
 

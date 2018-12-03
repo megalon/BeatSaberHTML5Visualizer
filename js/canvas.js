@@ -41,9 +41,7 @@ function animate() {
   // clear canvas
   ctx.clearRect(0, 0, cvWidth, cvHeight)
 
-  //beatmapController.draw(iso, -x, 0, 2, 0, {'x':xRotation, 'y':yRotation, 'z':zRotation})
   beatmapController.draw(iso, -x, -2, 1.5, 1, {'x':xRotation, 'y':yRotation, 'z':zRotation})
-  //beatmapController.draw(iso, -x, -2, 1.5, -0.5, {'x':xRotation, 'y':yRotation, 'z':zRotation})
   //beatmapController.draw(iso, -x, 0, 0, 0, {'x':xRotation, 'y':yRotation, 'z':zRotation})
 
   playButton.draw(ctx)

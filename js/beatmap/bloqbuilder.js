@@ -67,7 +67,7 @@ export function makeBloq(time, lineIndex, lineLayer, type, cutDirection) {
     arrow = getColoredShape(makeArrow(cutDirection).translate(time, lineIndex, lineLayer), white)
   }
 
-  return {'cube': cube, 'arrow': arrow, 'supportStick': supportStick}
+  return {'cube': cube, 'arrow': arrow, 'supportStick': supportStick, 'time': time}
 }
 
 export function makeWall(time, lineIndex, type, duration, width) {

@@ -60,6 +60,8 @@ export default class BeatMapBuilder {
       }
       
       while (lineIndexLoop) {
+        // Swap iteration direction based on viewpoint
+        // This preserves correct Z layering
         if (rotations.z < PI_DIVISIONS.piover4){
           if (lineIndex >= bloqs[lineLayer].length - 1) { 
             lineIndexLoop = false
