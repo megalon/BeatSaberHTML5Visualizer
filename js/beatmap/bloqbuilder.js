@@ -3,7 +3,7 @@
 import { cutDirections, noteTypes, obstacleTypes, PI_DIVISIONS } from '../utils/constants.js'
 const { Color, Shape, Point, Path } = Isomer
 
-const yes = 'yes'
+const yes = 0
 export default yes
 
 let red = new Color(160, 60, 50)
@@ -67,7 +67,7 @@ export function makeBloq(time, lineIndex, lineLayer, type, cutDirection) {
     arrow = getColoredShape(makeArrow(cutDirection).translate(time, lineIndex, lineLayer), white)
   }
 
-  return {'cube': cube, 'arrow': arrow, 'supportStick': supportStick, 'time': time}
+  return {'cube': cube, 'arrow': arrow, 'supportStick': supportStick}
 }
 
 export function makeWall(time, lineIndex, type, duration, width) {
@@ -84,7 +84,7 @@ export function makeWall(time, lineIndex, type, duration, width) {
       .translate(time + duration, 4 - lineIndex - width, 2)
       // ^ this translate is 3 - lineIndex - width + 1
   }
-  return { 'wall': getColoredShape(wall, redwall), 'duration': duration }
+  return getColoredShape(wall, redwall)
 }
 
 function makeBomb() {

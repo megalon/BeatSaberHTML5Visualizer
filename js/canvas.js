@@ -23,7 +23,7 @@ var ctx = canvas.getContext('2d')
 var cvWidth = canvas.width
 var cvHeight = canvas.height
 
-let x = 20
+let x = 0
 let xRotation = 0
 let yRotation = 0
 let zRotation = 0
@@ -41,7 +41,7 @@ function animate() {
   // clear canvas
   ctx.clearRect(0, 0, cvWidth, cvHeight)
 
-  beatmapController.draw(iso, -x, -2, 1.5, 1, {'x':xRotation, 'y':yRotation, 'z':zRotation})
+  beatmapController.draw(iso, -x, {'x':-2, 'y':1.5, 'z':1}, {'x':xRotation, 'y':yRotation, 'z':zRotation})
   //beatmapController.draw(iso, -x, 0, 0, 0, {'x':xRotation, 'y':yRotation, 'z':zRotation})
 
   playButton.draw(ctx)
