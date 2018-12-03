@@ -2,7 +2,7 @@
   Constants
 */
 
-export const PIDIVISIONS  = {
+export const PI_DIVISIONS  = {
   'piover2': Math.PI / 2,
   'piover4': Math.PI / 4,
 }

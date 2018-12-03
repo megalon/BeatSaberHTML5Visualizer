@@ -1,5 +1,5 @@
 // Store and display all of the bloqs, bombs, and obstacles in the beatmap. 
-import { PIDIVISIONS } from './utils/constants.js'
+import { PI_DIVISIONS } from '../utils/constants.js'
 import { makeBloq, makeWall } from './bloqbuilder.js'
 
 // Draw the support lines below the bloqs
@@ -55,12 +55,12 @@ export default class BeatMapBuilder {
 
       let lineIndexLoop = true
       let lineIndex = -1
-      if (rotations.z > PIDIVISIONS.piover4) {
+      if (rotations.z > PI_DIVISIONS.piover4) {
         lineIndex = bloqs[lineLayer].length
       }
       
       while (lineIndexLoop) {
-        if (rotations.z < PIDIVISIONS.piover4){
+        if (rotations.z < PI_DIVISIONS.piover4){
           if (lineIndex >= bloqs[lineLayer].length - 1) { 
             lineIndexLoop = false
             continue
@@ -73,10 +73,7 @@ export default class BeatMapBuilder {
           }
           --lineIndex
         }
-
-        //console.log(lineIndex)
-      // console.log(rotations.z)
-      //for (lineIndex = 0; lineIndex < bloqs[lineLayer].length; ++lineIndex){
+        
         // Store lineIndex length so we don't have to get it for each item in the array
         let lineIndexLength = bloqs[lineLayer][lineIndex].length
         // Loop through all of the bloqs in this lineIndex
@@ -115,7 +112,7 @@ export default class BeatMapBuilder {
             , bloq.cube.color
             )
 
-          // Draw the arrow, it it exists. (Bombs have no arrow)
+          // Draw the arrow, if it exists. (Bombs have no arrow)
           if (bloq.arrow !== undefined)
             iso.add(
               bloq.arrow.shape

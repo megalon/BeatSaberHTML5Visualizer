@@ -1,6 +1,6 @@
 // This file generates uses isomer.js to draw the actual bloq objects
 
-import { cutDirections, noteTypes, obstacleTypes, PIDIVISIONS } from './utils/constants.js'
+import { cutDirections, noteTypes, obstacleTypes, PI_DIVISIONS } from '../utils/constants.js'
 const { Color, Shape, Point, Path } = Isomer
 
 const yes = 'yes'
@@ -60,7 +60,7 @@ export function makeBloq(time, lineIndex, lineLayer, type, cutDirection) {
     cube = getColoredShape(bomb, gray)
   }else{
     if (cutDirection >= cutDirections.downleft && cutDirection <= cutDirections.upright)
-      cube = getColoredShape(Shape.Prism(Point.ORIGIN).rotateX(Point(0, 0.5, 0.5), PIDIVISIONS.piover4).translate(time, lineIndex, lineLayer), color)
+      cube = getColoredShape(Shape.Prism(Point.ORIGIN).rotateX(Point(0, 0.5, 0.5), PI_DIVISIONS.piover4).translate(time, lineIndex, lineLayer), color)
     else
       cube = getColoredShape(Shape.Prism(Point(time, lineIndex, lineLayer)), color)
 
@@ -92,7 +92,7 @@ function makeBomb() {
     // Path.Star = function(origin, outerRadius, innerRadius, points) {
     Path.Star(Point(0.5, 0.5, 0), 0.5, 0.25, 6),
     0.5
-  ).rotateY(Point(0, 0, 0), PIDIVISIONS.piover2)
+  ).rotateY(Point(0, 0, 0), PI_DIVISIONS.piover2)
   .translate(1.25, 0, 0)
 }
 
@@ -102,7 +102,7 @@ function makeArrow(direction) {
     return Shape.extrude(
       Path.Circle(Point(0.5, 0.5, 0), 0.3, 6),
       arrowExtrusion
-    ).rotateY(Point(0, 0, 0), PIDIVISIONS.piover2)
+    ).rotateY(Point(0, 0, 0), PI_DIVISIONS.piover2)
     .rotateX(Point(0, 0.5, 0.5), arrowDirectionToRadians(direction))
     .scale(Point(0, 0.5, 0.5), 1, 0.75, 0.75)
   }
@@ -113,7 +113,7 @@ function makeArrow(direction) {
         Point(0.5, 0.5, 0),
       ]),
       arrowExtrusion
-    ).rotateY(Point(0, 0, 0), PIDIVISIONS.piover2)
+    ).rotateY(Point(0, 0, 0), PI_DIVISIONS.piover2)
     .rotateX(Point(0, 0.5, 0.5), arrowDirectionToRadians(direction))
     .scale(Point(0, 0.5, 0.5), 1, 0.75, 0.75)
 }
@@ -128,22 +128,22 @@ function arrowDirectionToRadians(direction) {
       radians = Math.PI;
       break
     case cutDirections.left:
-      radians = PIDIVISIONS.piover2;
+      radians = PI_DIVISIONS.piover2;
       break
     case cutDirections.right:
-      radians = -PIDIVISIONS.piover2;
+      radians = -PI_DIVISIONS.piover2;
       break
     case cutDirections.upleft:
-      radians = Math.PI + PIDIVISIONS.piover4;
+      radians = Math.PI + PI_DIVISIONS.piover4;
       break
     case cutDirections.upright:
-      radians = Math.PI - PIDIVISIONS.piover4;
+      radians = Math.PI - PI_DIVISIONS.piover4;
       break
     case cutDirections.downleft:
-      radians = -PIDIVISIONS.piover4;
+      radians = -PI_DIVISIONS.piover4;
       break
     case cutDirections.downright:
-      radians = PIDIVISIONS.piover4;
+      radians = PI_DIVISIONS.piover4;
       break
     default:
       0;

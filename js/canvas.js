@@ -41,6 +41,7 @@ function animate() {
   // clear canvas
   ctx.clearRect(0, 0, cvWidth, cvHeight)
 
+  //beatmapController.draw(iso, -x, 0, 2, 0, {'x':xRotation, 'y':yRotation, 'z':zRotation})
   beatmapController.draw(iso, -x, -2, 1.5, 1, {'x':xRotation, 'y':yRotation, 'z':zRotation})
   //beatmapController.draw(iso, -x, -2, 1.5, -0.5, {'x':xRotation, 'y':yRotation, 'z':zRotation})
   //beatmapController.draw(iso, -x, 0, 0, 0, {'x':xRotation, 'y':yRotation, 'z':zRotation})
@@ -49,8 +50,10 @@ function animate() {
   mapSlider.draw(ctx)
 
 
-  if(!paused)
+  if(!paused){
     x += speed
+    //zRotation += speed
+  }
 }
 
 animate()
@@ -73,7 +76,7 @@ canvas.addEventListener('mousemove', function(evt) {
   if (evt.which === MOUSE_DRAGGING_EVENT){
     if (oldMousePos !== undefined){
       if (mousePos.y < 450) {
-        yRotation += (mousePos.y - oldMousePos.y) * mouseRotationSpeed
+        //yRotation += (mousePos.y - oldMousePos.y) * mouseRotationSpeed
         zRotation += (mousePos.x - oldMousePos.x) * mouseRotationSpeed
       }
     }
