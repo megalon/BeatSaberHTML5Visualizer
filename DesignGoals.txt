@@ -8,4 +8,5 @@ Make it as portable as possible, so it can be on ScoreSaber and used for caster 
 
 TODO:
 DONE Dot notes
-Obstacles
+DONE Obstacles
+  DONE Make Obstacles appear at the correct time

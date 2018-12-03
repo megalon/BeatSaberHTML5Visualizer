@@ -1,10 +1,12 @@
 
 let canvas = undefined
+let iso = undefined
 
 export class UIController {
 
-  constructor(canvas) {
+  constructor(canvas, iso) {
     this.canvas = canvas
+    this.iso = iso
   }
 
   getCursorPosition(event) {

@@ -1,6 +1,6 @@
 // This file generates uses isomer.js to draw the actual bloq objects
 
-import { cutDirections, noteTypes, obstacleTypes } from './utils/constants.js'
+import { cutDirections, noteTypes, obstacleTypes, PI_DIVISIONS } from '../utils/constants.js'
 const { Color, Shape, Point, Path } = Isomer
 
 const yes = 'yes'
@@ -14,9 +14,6 @@ let gray = new Color(50, 50, 50, 1)
 let graySupport = new Color(50, 50, 50, 0.25)
 let white = new Color(255, 255, 255)
 let redwall = new Color(255, 0, 0, 0.25)
-
-let piover2 = Math.PI / 2
-let piover4 = Math.PI / 4
 
 let supportStickScale = 16
 let arrowExtrusion = 0.1
@@ -63,14 +60,14 @@ export function makeBloq(time, lineIndex, lineLayer, type, cutDirection) {
     cube = getColoredShape(bomb, gray)
   }else{
     if (cutDirection >= cutDirections.downleft && cutDirection <= cutDirections.upright)
-      cube = getColoredShape(Shape.Prism(Point.ORIGIN).rotateX(Point(0, 0.5, 0.5), piover4).translate(time, lineIndex, lineLayer), color)
+      cube = getColoredShape(Shape.Prism(Point.ORIGIN).rotateX(Point(0, 0.5, 0.5), PI_DIVISIONS.piover4).translate(time, lineIndex, lineLayer), color)
     else
       cube = getColoredShape(Shape.Prism(Point(time, lineIndex, lineLayer)), color)
 
     arrow = getColoredShape(makeArrow(cutDirection).translate(time, lineIndex, lineLayer), white)
   }
 
-  return {'cube': cube, 'arrow': arrow, 'supportStick': supportStick}
+  return {'cube': cube, 'arrow': arrow, 'supportStick': supportStick, 'time': time}
 }
 
 export function makeWall(time, lineIndex, type, duration, width) {
@@ -87,7 +84,7 @@ export function makeWall(time, lineIndex, type, duration, width) {
       .translate(time + duration, 4 - lineIndex - width, 2)
       // ^ this translate is 3 - lineIndex - width + 1
   }
-  return getColoredShape(wall, redwall)
+  return { 'wall': getColoredShape(wall, redwall), 'duration': duration }
 }
 
 function makeBomb() {
@@ -95,7 +92,7 @@ function makeBomb() {
     // Path.Star = function(origin, outerRadius, innerRadius, points) {
     Path.Star(Point(0.5, 0.5, 0), 0.5, 0.25, 6),
     0.5
-  ).rotateY(Point(0, 0, 0), piover2)
+  ).rotateY(Point(0, 0, 0), PI_DIVISIONS.piover2)
   .translate(1.25, 0, 0)
 }
 
@@ -105,7 +102,7 @@ function makeArrow(direction) {
     return Shape.extrude(
       Path.Circle(Point(0.5, 0.5, 0), 0.3, 6),
       arrowExtrusion
-    ).rotateY(Point(0, 0, 0), piover2)
+    ).rotateY(Point(0, 0, 0), PI_DIVISIONS.piover2)
     .rotateX(Point(0, 0.5, 0.5), arrowDirectionToRadians(direction))
     .scale(Point(0, 0.5, 0.5), 1, 0.75, 0.75)
   }
@@ -116,7 +113,7 @@ function makeArrow(direction) {
         Point(0.5, 0.5, 0),
       ]),
       arrowExtrusion
-    ).rotateY(Point(0, 0, 0), piover2)
+    ).rotateY(Point(0, 0, 0), PI_DIVISIONS.piover2)
     .rotateX(Point(0, 0.5, 0.5), arrowDirectionToRadians(direction))
     .scale(Point(0, 0.5, 0.5), 1, 0.75, 0.75)
 }
@@ -131,22 +128,22 @@ function arrowDirectionToRadians(direction) {
       radians = Math.PI;
       break
     case cutDirections.left:
-      radians = piover2;
+      radians = PI_DIVISIONS.piover2;
       break
     case cutDirections.right:
-      radians = -piover2;
+      radians = -PI_DIVISIONS.piover2;
       break
     case cutDirections.upleft:
-      radians = Math.PI + piover4;
+      radians = Math.PI + PI_DIVISIONS.piover4;
       break
     case cutDirections.upright:
-      radians = Math.PI - piover4;
+      radians = Math.PI - PI_DIVISIONS.piover4;
       break
     case cutDirections.downleft:
-      radians = -piover4;
+      radians = -PI_DIVISIONS.piover4;
       break
     case cutDirections.downright:
-      radians = piover4;
+      radians = PI_DIVISIONS.piover4;
       break
     default:
       0;
