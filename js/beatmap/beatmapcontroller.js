@@ -50,6 +50,8 @@ export default class BeatmapController {
     let numGridLines = Math.ceil(floorLength / drawingScale)
     for (let i = 0; i < numGridLines; i += 1) {
       let xPos = ((i + timeOffset) % numGridLines) * drawingScale + floorLength  + xyzOffsets.x
+      if (xPos < xyzOffsets.x)
+        continue
       iso.add(
         Shape.Prism(
           // Starting position

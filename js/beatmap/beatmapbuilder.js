@@ -89,7 +89,7 @@ export default class BeatMapBuilder {
           tempX = (bloq.time + timeOffset) * gridScale + xyzOffsets.x
 
           // Skip drawing the bloqs if they aren't visible
-          if (bloq.time < -timeOffset || tempX - xyzOffsets.x > maxX) continue
+          if (-timeOffset > bloq.time || tempX - xyzOffsets.x > maxX) continue
 
           bloqCounter++
           bloq.draw(iso, timeOffset, xyzOffsets, rotationPoints, rotations, gridScale)
@@ -110,13 +110,13 @@ export default class BeatMapBuilder {
           
           //console.log(obstacle.duration)
           // Skip drawing the obstacles if they aren't visible
-          if (obstacle.time < -timeOffset || tempX - xyzOffsets.x > maxX + obstacle.duration) continue
+          if (-timeOffset > obstacle.time + obstacle.duration || tempX - xyzOffsets.x > maxX + obstacle.duration) continue
 
           obstacle.draw(iso, timeOffset, xyzOffsets, rotationPoints, rotations, gridScale)
         }
       }
     }
-    console.log(`Drew ${bloqCounter} bloqs`)
+    //console.log(`Drew ${bloqCounter} bloqs`)
   }
 }
 

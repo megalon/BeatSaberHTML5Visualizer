@@ -1,5 +1,6 @@
 import { makeWall } from './bloqbuilder.js'
 import NoteParent from './NoteParent.js';
+const { Point } = Isomer
 
 export default class Wall extends NoteParent{
   constructor(time, lineIndex, type, duration, width){
@@ -19,6 +20,7 @@ export default class Wall extends NoteParent{
     let scaledTimeOffset = (this.time + timeOffset) * gridScale
     iso.add(
       this.wall.shape
+      .scale(Point.ORIGIN, gridScale, 1, 1)
       .translate(scaledTimeOffset + xyzOffsets.x, xyzOffsets.y, xyzOffsets.z)
       .rotateX(rotationPoints.x, rotations.x)
       .rotateY(rotationPoints.y, rotations.y)
