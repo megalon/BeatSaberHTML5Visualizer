@@ -1,6 +1,5 @@
 // Store and display all of the bloqs, bombs, and obstacles in the beatmap. 
 import { PI_DIVISIONS } from '../utils/constants.js'
-import { makeBloq, makeWall } from './bloqbuilder.js'
 import Bloq from './Bloq.js'
 import Wall from './Wall.js'
 
@@ -47,7 +46,8 @@ export default class BeatMapBuilder {
     }
   }
   
-  drawBeatmap(iso, timeOffset, xyzOffsets, rotationPoints, rotations) {
+  drawBeatmap(iso, timeOffset, xyzOffsets, rotationPoints, rotations, gridScale) {
+    let bloqCounter = 0
     // Loop through all of the lineLayers
     for (let lineLayer = 0; lineLayer < bloqs.length; ++lineLayer){
       let lineIndexLoop = true
@@ -84,37 +84,39 @@ export default class BeatMapBuilder {
         let bloq = undefined
         for (let bloqIndex = lineIndexLength - 1; bloqIndex >= 0; --bloqIndex) {
           bloq = bloqs[lineLayer][lineIndex][bloqIndex]
+          bloq.gridScale = gridScale
 
-          tempX = bloq.getXPosition() + timeOffset + xyzOffsets.x
+          tempX = (bloq.time + timeOffset) * gridScale + xyzOffsets.x
 
           // Skip drawing the bloqs if they aren't visible
-          if (tempX < minX + xyzOffsets.x || tempX - xyzOffsets.x > maxX) continue
+          if (bloq.time < -timeOffset || tempX - xyzOffsets.x > maxX) continue
 
-          bloq.draw(iso, timeOffset, xyzOffsets, rotationPoints, rotations)
+          bloqCounter++
+          bloq.draw(iso, timeOffset, xyzOffsets, rotationPoints, rotations, gridScale)
         }
 
         // -----------------
         // Draw the obstacles here
         // -----------------
         // Store amount of obstacles in the array so we don't have to get it for each item in the array
-
-        
         lineIndexLength = obstacles[lineLayer][lineIndex].length
         tempX = 0
         let obstacle = undefined
         for (let obstacleIndex = lineIndexLength - 1; obstacleIndex >= 0; --obstacleIndex) {
           obstacle = obstacles[lineLayer][lineIndex][obstacleIndex]
+          obstacle.gridScale = gridScale
 
-          tempX = obstacle.getXPosition() + timeOffset + xyzOffsets.x
+          tempX = (obstacle.time + timeOffset) * gridScale + xyzOffsets.x
           
           //console.log(obstacle.duration)
           // Skip drawing the obstacles if they aren't visible
-          if (tempX < minX + xyzOffsets.x + 1 || tempX - xyzOffsets.x > maxX + obstacle.duration) continue
+          if (obstacle.time < -timeOffset || tempX - xyzOffsets.x > maxX + obstacle.duration) continue
 
-          obstacle.draw(iso, timeOffset, xyzOffsets, rotationPoints, rotations)
+          obstacle.draw(iso, timeOffset, xyzOffsets, rotationPoints, rotations, gridScale)
         }
       }
     }
+    console.log(`Drew ${bloqCounter} bloqs`)
   }
 }
 

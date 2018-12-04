@@ -8,17 +8,18 @@ export default class Wall extends NoteParent{
     this.duration = duration
     this.width = width
 
-    this.wall = makeWall(time, lineIndex, type, duration, width)
+    this.wall = makeWall(0, lineIndex, type, duration, width)
   }
 
   getXPosition(){
     return this.wall.shape.paths[0].points[0].x
   }
 
-  draw(iso, timeOffset, xyzOffsets, rotationPoints, rotations) {
+  draw(iso, timeOffset, xyzOffsets, rotationPoints, rotations, gridScale) {
+    let scaledTimeOffset = (this.time + timeOffset) * gridScale
     iso.add(
       this.wall.shape
-      .translate(timeOffset + xyzOffsets.x, xyzOffsets.y, xyzOffsets.z)
+      .translate(scaledTimeOffset + xyzOffsets.x, xyzOffsets.y, xyzOffsets.z)
       .rotateX(rotationPoints.x, rotations.x)
       .rotateY(rotationPoints.y, rotations.y)
       .rotateZ(rotationPoints.z, rotations.z)

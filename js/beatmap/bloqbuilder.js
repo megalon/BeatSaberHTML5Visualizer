@@ -59,7 +59,7 @@ export function makeBloq(time, lineIndex, lineLayer, type, cutDirection) {
     let bomb = makeBomb().translate(time, lineIndex, lineLayer)
     cube = getColoredShape(bomb, gray)
   }else{
-    if (cutDirection >= cutDirections.downleft && cutDirection <= cutDirections.upright)
+    if (cutDirection >= cutDirections.upleft && cutDirection <= cutDirections.downright)
       cube = getColoredShape(Shape.Prism(Point.ORIGIN).rotateX(Point(0, 0.5, 0.5), PI_DIVISIONS.piover4).translate(time, lineIndex, lineLayer), color)
     else
       cube = getColoredShape(Shape.Prism(Point(time, lineIndex, lineLayer)), color)
@@ -89,7 +89,6 @@ export function makeWall(time, lineIndex, type, duration, width) {
 
 function makeBomb() {
   return Shape.extrude(
-    // Path.Star = function(origin, outerRadius, innerRadius, points) {
     Path.Star(Point(0.5, 0.5, 0), 0.5, 0.25, 6),
     0.5
   ).rotateY(Point(0, 0, 0), PI_DIVISIONS.piover2)
@@ -98,7 +97,6 @@ function makeBomb() {
 
 function makeArrow(direction) {
   if (direction === cutDirections.none){
-    // Path.Circle = function(origin, radius, vertices) {
     return Shape.extrude(
       Path.Circle(Point(0.5, 0.5, 0), 0.3, 6),
       arrowExtrusion
@@ -122,16 +120,16 @@ function arrowDirectionToRadians(direction) {
   let radians = 0
   switch (direction) {
     case cutDirections.up:
-      radians = 0;
-      break
-    case cutDirections.down:
       radians = Math.PI;
       break
+    case cutDirections.down:
+      radians = 0;
+      break
     case cutDirections.left:
-      radians = PI_DIVISIONS.piover2;
+      radians = -PI_DIVISIONS.piover2;
       break
     case cutDirections.right:
-      radians = -PI_DIVISIONS.piover2;
+      radians = PI_DIVISIONS.piover2;
       break
     case cutDirections.upleft:
       radians = Math.PI + PI_DIVISIONS.piover4;

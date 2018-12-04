@@ -1,4 +1,4 @@
-import BeatmapController from './beatmapcontroller.js'
+import BeatmapController from './beatmap/beatmapcontroller.js'
 import Playbutton from './ui/playbutton.js';
 import MapSlider from './ui/mapslider.js';
 
@@ -14,6 +14,7 @@ const iso = new Isomer(document.getElementById("art"))
 // Rendering and movement of the beatmap
 const beatmapController = new BeatmapController()
 
+//const testSongPath = '../testdata/Test Track/Easy.json'
 const testSongPath = '../testdata/Your voice so - PSYQUI/ExpertPlus.json'
 //const testSongPath = '../testdata/ExpertPlus.json'
 //const testSongPath = '../testdata/Tank! (Ben Briggs Remix)/Expert.json'
@@ -30,7 +31,7 @@ let zRotation = 0
 let rotationSpeed = 0.01
 let rotationMax = Math.PI / 2
 let rotationMin = 0
-let speed = 0.05
+let speed = 0.03
 let paused = true
 let playButton = new Playbutton(0, 1000 - 200, 100, 100)
 let mapSlider = new MapSlider(0, 1000 - 100, 1000, 100)
@@ -46,7 +47,6 @@ function animate() {
 
   playButton.draw(ctx)
   mapSlider.draw(ctx)
-
 
   if(!paused){
     x += speed

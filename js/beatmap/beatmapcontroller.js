@@ -1,15 +1,15 @@
-import BeatmapBuilder from './beatmap/beatmapbuilder.js'
-
+import BeatmapBuilder from './beatmapbuilder.js'
 const { Point, Shape, Color } = Isomer
 
 const builder = new BeatmapBuilder()
 
 const rotationPointMaster = new Point(0.5 + 5, 2, 0)
-
 let rotationPoints = {'x': rotationPointMaster, 'y': rotationPointMaster, 'z': rotationPointMaster}
 
 let tempRotationPoint = undefined
 let tempRotationPoints = undefined
+
+let drawingScale = 4
 
 export default class BeatmapController {
   loadBeatmap(jsonfilepath) {
@@ -24,23 +24,20 @@ export default class BeatmapController {
   }
 
   draw(iso, timeOffset, xyzOffsets, rotations){
-    //console.log(`zRotationPointMaster:${zRotationPointMaster} zrotation:${zrotation}`)
-    //console.log(zRotationPointMaster)
-    //rotationPointMaster.translate(xoffset, yoffset, zoffset)
-    //tempRotationPoints = {'x': rotationPointMaster, 'y': rotationPointMaster, 'z': rotationPointMaster}
     tempRotationPoint = new Point(rotationPointMaster.x + xyzOffsets.x, rotationPointMaster.y + xyzOffsets.y, rotationPointMaster.z + xyzOffsets.z)
     tempRotationPoints = {'x': tempRotationPoint, 'y': tempRotationPoint, 'z': tempRotationPoint}
 
-    this.drawGrid(iso, timeOffset, xyzOffsets, tempRotationPoints, rotations)
-    builder.drawBeatmap(iso, timeOffset, xyzOffsets, tempRotationPoints, rotations)
+    this.drawGrid(iso, timeOffset, xyzOffsets, tempRotationPoints, rotations, drawingScale)
+    builder.drawBeatmap(iso, timeOffset, xyzOffsets, tempRotationPoints, rotations, drawingScale)
   }
 
-  drawGrid(iso, timeOffset, xyzOffsets, rotationPoints, rotations) {
-    // Floor
+  drawGrid(iso, timeOffset, xyzOffsets, rotationPoints, rotations, drawingScale) {
     let floorLength = 10
     let gridlineWidth = 1/16
     let halfgridlineWidth = gridlineWidth / 2
     let gridColor = new Color(200, 200, 200)
+
+    // Floor
     iso.add(
       Shape.Prism(Point.ORIGIN, 10, 4, 0.01)
       .translate(0.5 + xyzOffsets.x, xyzOffsets.y, xyzOffsets.z - 0.01)
@@ -50,12 +47,14 @@ export default class BeatmapController {
       )
 
     // Generate gridLines
-    for (let i = 0; i < floorLength; i += 1){
+    let numGridLines = Math.ceil(floorLength / drawingScale)
+    for (let i = 0; i < numGridLines; i += 1) {
+      let xPos = ((i + timeOffset) % numGridLines) * drawingScale + floorLength  + xyzOffsets.x
       iso.add(
         Shape.Prism(
           // Starting position
           Point(
-            (i + timeOffset) % floorLength + floorLength + xyzOffsets.x,
+            xPos,
             xyzOffsets.y,
             xyzOffsets.z
           ),

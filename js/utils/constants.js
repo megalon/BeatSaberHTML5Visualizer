@@ -36,11 +36,12 @@ export const lineLayers = {
 export const noteTypes = {
   'red': 0,
   'blue': 1,
-  'bomb': 2,
+  'bomb': 3,
 }
 
 /*
 Cut directions
+Meaning, where the blade is starting from
 0 = up, 
 1 = down, 
 2 = left, 
@@ -49,17 +50,17 @@ Cut directions
 5 = up right, 
 6 = down left,
 7 = down right, 
-8 = no direction
+8 = any direction
 */
-export const cutDirections = {
-  'down': 0,
-  'up': 1,
-  'right': 2,
-  'left': 3,
-  'downleft': 4,
-  'downright': 5,
-  'upleft': 6,
-  'upright': 7,
+export const cutDirections = {  
+  'up': 0,
+  'down': 1,
+  'left': 2,
+  'right': 3,
+  'upleft': 4,
+  'upright': 5,
+  'downleft': 6,
+  'downright': 7,
   'none': 8,
 }
 
